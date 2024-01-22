@@ -2,9 +2,9 @@
 
 export(run_app)
 import(dplyr)
-import(gghighlight)
 import(ggplot2)
 import(leaflet)
+import(plotly)
 import(sf)
 import(shiny)
 import(shinythemes)

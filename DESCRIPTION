@@ -9,11 +9,10 @@ License: What license is it under?
 Imports: 
     config (>= 0.3.1),
     dplyr,
-    gghighlight,
     ggplot2,
     golem (>= 0.4.1),
     leaflet,
-    pkgload,
+    plotly,
     sf,
     shiny (>= 1.7.4.1),
     shinythemes,

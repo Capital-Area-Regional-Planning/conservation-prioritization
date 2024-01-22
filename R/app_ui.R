@@ -8,8 +8,8 @@
 #' @import ggplot2
 #' @import tidyr
 #' @import leaflet
-#' @import gghighlight
 #' @import shinythemes
+#' @import plotly
 #' @noRd
 
 
@@ -18,7 +18,6 @@ app_ui <- function(request) {
 
   # forest_data <- read_sf(paste0(here::here(), "/data-raw/MenYah_Veg_Dissovled/Mendotat_Yahara_Polygons_dissolved.shp")) %>%
   #   st_transform(4326)
-
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
@@ -61,7 +60,11 @@ app_ui <- function(request) {
         ,
     tabsetPanel(
       tabPanel("Map", leafletOutput("mapl", height = "1000")),
-      tabPanel("Plot", br(), plotOutput("cumulative_plot"), br(), plotOutput("change_plot"))
+      tabPanel("Plot",
+               br(),
+               plotlyOutput("cumulative_plot"),
+               br(),
+               plotlyOutput("change_plot"))
       # tabPanel("Easements",
       #          selectInput("address_search", "Address Search", choices = character(0)),
       #          textOutput("address_search"))

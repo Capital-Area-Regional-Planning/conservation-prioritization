@@ -88,7 +88,7 @@ app_server <- function(input, output, session) {
   })
 
 
-  output$cumulative_plot <- renderPlot ({
+  output$cumulative_plot <- renderPlotly ({
 
     col_as_num <- as.numeric(colnames(forest_data)[4:11])
     if (input$year == 2022 ) {
@@ -97,24 +97,34 @@ app_server <- function(input, output, session) {
       display_year <- 3+min(which(input$year < col_as_num))-1
     }
 
-    name <- colnames(forest_data[display_year])[[1]]
+    disp_name <- colnames(forest_data[display_year])[[1]]
 
-    ggplot(filter(cumulative_summary, value != "Not Forest"), aes(x=as.numeric(name), y=total, color=factor(value, levels = c("Old Growth Forest", "Early Successional Forest", "Old Growth Forest Lost", "Early Successional Forest Lost")))) +
-      geom_point(size=4) +
-      scale_color_manual(values = c("#3fab63", "#4e79cf", "#cf4e4e", "#f5ac53")) +
+    fade <- filter(cumulative_summary, value != "Not Forest") %>%
+      mutate(fade = case_when(name == disp_name ~ 1,
+                              TRUE ~ .4))
+    fade <- as.vector(fade$fade)
+
+    p <- ggplot(filter(cumulative_summary, value != "Not Forest"), aes(x=as.numeric(name), y=total, color=factor(value, levels = c("Old Growth Forest", "Early Successional Forest", "Old Growth Forest Lost", "Early Successional Forest Lost")))) +
       #highlight the year closest to the slider input
-      gghighlight(name == !!name, label_key = value, keep_scales = TRUE, use_direct_label = FALSE,
-                  unhighlighted_params = list(colour = NULL, alpha = 0.3)) +
+      geom_point(size=4,  alpha = fade) +
+      scale_color_manual(values = c("#3fab63", "#4e79cf", "#cf4e4e", "#f5ac53")) +
       labs(title="Acreage Total by Decade",
-           x ="Year", y = "Acres") +
+           x ="Year", y = "Acres", color = "") +
       scale_x_continuous(breaks=c(1937, 1955, 1968, 1976, 1987, 2000, 2010, 2022), labels=c("1937", "1955", "1968", "1976", "1987", "2000", "2010", "2022")) +
       theme_minimal() +
       theme(text = element_text(size=20), legend.title= element_blank())
 
+    #disable clicking on legend, causes weird graphical issues otherewise
+    ggplotly(p, tooltip = "total") %>% layout(legend = list(
+      itemclick = FALSE,
+      itemdoubleclick = FALSE,
+      groupclick = FALSE
+    ))
+
   })
 
 
-  output$change_plot <- renderPlot ({
+  output$change_plot <- renderPlotly ({
 
     col_as_num <- as.numeric(colnames(forest_data)[4:11])
     if (input$year == 2022 ) {
@@ -123,21 +133,30 @@ app_server <- function(input, output, session) {
       display_year <- 3+min(which(input$year < col_as_num))-1
     }
 
-    name <- colnames(forest_data[display_year])[[1]]
+    disp_name <- colnames(forest_data[display_year])[[1]]
 
-    ggplot(change_summary, aes(x=name, y=change, color=factor(value, levels = c("Early Successional Forest", "Old Growth Forest")))) +
-      geom_point(size=4) +
-      scale_color_manual(values = c("#4e79cf", "#3fab63")) +
+    fade <- change_summary %>%
+      mutate(fade = case_when(name == disp_name ~ 1,
+                              TRUE ~ .4))
+   fade <- as.vector(fade$fade)
+
+   p <- ggplot(change_summary, aes(x=name, y=change, color=factor(value, levels = c("Early Successional Forest", "Old Growth Forest")))) +
       #highlight the year closest to the slider input
-      gghighlight(name == !!name, label_key = value, keep_scales = TRUE, use_direct_label = FALSE,
-                  unhighlighted_params = list(colour = NULL, alpha = 0.3)) +
+      geom_point(size=4,  alpha = fade) +
+      scale_color_manual(values = c("#4e79cf", "#3fab63")) +
       labs(title="Acreage Change by Decade",
-           x ="Year", y = "Acreage Change") +
+           x ="Year", y = "Acreage Change", color = "") +
       scale_x_continuous(breaks=c(1937, 1955, 1968, 1976, 1987, 2000, 2010, 2022), labels=c("", "1955", "1968", "1976", "1987", "2000", "2010", "2022")) +
       theme_minimal() +
       theme(text = element_text(size=20), legend.title= element_blank()) +
       geom_hline(yintercept=0, linetype="dashed", color = "red")
 
+      #disable clicking on legend, causes weird graphical issues otherewise
+      ggplotly(p, tooltip = "change") %>% layout(legend = list(
+        itemclick = FALSE,
+        itemdoubleclick = FALSE,
+        groupclick = FALSE
+      ))
   })
   # updateSelectizeInput(session, "address_search", choices = parcels_2023_short$address, server = TRUE)
   #
