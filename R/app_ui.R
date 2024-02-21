@@ -32,17 +32,16 @@ app_ui <- function(request) {
         HTML('
                <h2>Mendota/Yahara Conservation Priority Pilot Project </h2>
                <br>
-               <p>This project uses historical aerial photography and satellite imagery to track forest
-               change from 1937 to 2022. This project was created by the
-               <a href="https://www.capitalarearpc.org/">Capital Area Regional Planning Commission </a>.</p>
-               <br>
-               <h2>Why Track Forest Change?</h2>
-               <br>
-               <p>Trees are a significant source of carbon capture: they absorb carbon
-               that would otherwise reach the atmosphere, which helps to mitigate climate change.
-               The project area shows a concerning trend of old growth forest being converted to agriculture,
-               which releases carbon captured by the canopy and soil.
-               </p>
+               <p>Forests are important carbon sinks: trees and soil absorb and store carbon which would otherwise reach the atmosphere.
+               When a forest is lost, much of this stored carbon is released. Protecting existing forest land is thus a key strategy to mitigating climate change.</p>
+               <p>The <a href="https://www.capitalarearpc.org/">Capital Area Regional Planning Commission</a>
+               and the <a href ="https://www.urbantreealliance.org/1628460467349/what-we-do/"> Urban Tree Alliance </a>
+               received funding from the <a href = "https://bockfoundation.com/"> John C. Bock Foundation </a> in 2023 to map historical forest loss in the Mendota and Yahara watersheds.
+               The Bock Foundation was established to preserve and protect Wisconsin’s old growth forests, particularly in the Lake Mendota watershed. </p>
+              <p> This project used aerial photography and satellite imagery to track forest change from 1937 to 2022.
+              The results show a concerning decline of nearly 25% of old growth forest during this time, primarily from loss to agricultural conversion.
+              We hope to expand this project in the future, both to understand the changing landscape of our county and to protect remaining old growth forest. </p>
+               <p> <a href="https://www.capitalarearpc.org/category/tree-canopy/"> Learn about ongoing work to map and inventory the regional tree canopy at CARPC. </a></p>
                <br>
                <p>Use the year slider below to see how the forest in the Mendota/Yahara area has changed.
                The "Map" tab shows geographical information - you can zoom and pan around the map.
